@@ -7,21 +7,18 @@ services:
     ports:
       - "3000:3000"
     container_name: api
-    environment:
-      - PORT=3000
-      - MONGODB_URL=mongodb://root:example@mongo:27017/demo
-      - KEY_PEM=/app/certs/key.pem
-      - CERT_PEM=/app/certs/cert.pem
+    env_file:
+      - .env
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
       - mongo
     command: >
-      sh -c "npm run dev"
+      sh -c "./wait-for-mongo.sh && npm run dev"
     networks:
       - app-network
-    restart: always
+
   mongo:
     image: mongo:6.0
     container_name: mongodb
@@ -44,7 +41,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017
     depends_on:
       - mongo
     networks:
