@@ -14,11 +14,12 @@ const App = () => {
     
     const movePlayer = (name: String , direction: Directions) => { 
         move(name,direction);
-    } 
+    }
+    
 
     useEffect(() => {
         initStore();
-        ClientService.getInstance().init("http://localhost:3000");
+        //ClientService.getInstance().init("http://localhost:3000");
         GameService.getInstance().init();
         // Dentro de App.tsx, antes del return:
         console.log('Players desde GameStore:', players);

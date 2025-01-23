@@ -1,7 +1,7 @@
 import Player, { IPlayer } from '../models/Player';
 
 export class PlayerService {
-    public static async createPlayer(playerData: Partial<IPlayer>): Promise<IPlayer> {
+    public static async createPlayer(playerData: IPlayer): Promise<IPlayer> {
         const newPlayer = new Player(playerData);
         return await newPlayer.save();
     }
